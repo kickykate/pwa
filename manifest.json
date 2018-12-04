@@ -1,9 +1,9 @@
 {
-  "short_name": "Chat",
-  "name": "Chat",
+  "short_name": "PWA",
+  "name": "PWA",
   "icons": [
   {
-  "src":"/assets/icon.png",
+  "src":"/pwa/assets/icon.png",
   "sizes": "192x192",
   "type": "image/png"
   }
