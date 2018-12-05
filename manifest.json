@@ -1,15 +1,21 @@
 {
-  "short_name": "PWA",
-  "name": "PWA",
+  "short_name": "Kickykate",
+  "name": "Kickykate",
   "icons": [
-  {
-  "src":"/pwa/assets/icon.png",
-  "sizes": "192x192",
-  "type": "image/png"
-  }
+    {
+      "src": "/assets/icons-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/assets/icons-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
   ],
-  "start_url": "/?utm_source=homescreen",
-  "background_color": "#e05a47",
-  "theme_color": "#e05a47",
-  "display": "standalone"
+  "start_url": "/pwa/HelloWorld.html?source=pwa",
+  "background_color": "#3367D6",
+  "display": "standalone",
+  "scope": "/pwa/",
+  "theme_color": "#3367D6"
 }
