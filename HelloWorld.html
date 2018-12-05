@@ -14,14 +14,26 @@
 				<a href="HelloWorld.html">click me</a>
 				<img src="/pwa/assets/icon.png" alt="logo" id="loader"/>
 			</div>
-			
-			<button id="btnAdd" type="button">
-				Install
-			</button>
+			<div>
+				<input id="input-picture" type="file" accept="image/*">
+			</div>
+			<div>
+				<button id="btnAdd" type="button">Install</button>
+			</div>
 		</div>
 	  </div>
 	</div>
 </body>
+
+<script>
+  const pictureInput = document.getElementById('input-picture');
+
+  pictureInput.addEventListener('change', (e) => doSomethingWithFiles(e.target.files));
+  
+  function doSomethingWithFiles(files) {
+	console.log(files);
+  }
+</script>
 
 <script>
 if ('serviceWorker' in navigator) {
