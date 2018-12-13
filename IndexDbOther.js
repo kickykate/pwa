@@ -4,6 +4,8 @@ var db;
 var objectStore;
 var request = indexedDB.open(dbName, 2);
 
+var clothes = [];
+
 request.onerror = function(event) {
   // Handle errors.
 };
@@ -26,7 +28,7 @@ request.onupgradeneeded = function(event) {
 
 	// Create an index to search customers by email. We want to ensure that
 	// no two customers have the same email, so use a unique index.
-	objectStore.createIndex("clothing", "clothing", { unique: true });
+	objectStore.createIndex("clothing", "clothing", { unique: false });
 
 	// Use transaction oncomplete to make sure the objectStore creation is 
 	// finished before adding data into it.
@@ -43,7 +45,7 @@ request.put = function (clothes) {
 	var transaction = db.transaction(["clothes"], "readwrite");
 
 	// Put the blob into the dabase
-	var key = clothes.category + "." + clothes.clothing;
+	var key = clothes.key;
 	var put = transaction.objectStore("clothes").add(clothes);
 };
 request.get = function(key) {
@@ -58,32 +60,6 @@ request.query = function(key) {
 	var objectStore = db.transaction("clothes", "readwrite").objectStore("clothes");
 	var index = objectStore.index("category");
 
-	// Only match "warm"
-	var singleKeyRange = IDBKeyRange.only("warm");
-
-	// // Match anything past "Bill", including "Bill"
-	// var lowerBoundKeyRange = IDBKeyRange.lowerBound("warm");
-
-	// // Match anything past "Bill", but don't include "Bill"
-	// var lowerBoundOpenKeyRange = IDBKeyRange.lowerBound("Bill", true);
-
-	// // Match anything up to, but not including, "Donna"
-	// var upperBoundOpenKeyRange = IDBKeyRange.upperBound("Donna", true);
-
-	// // Match anything between "Bill" and "Donna", but not including "Donna"
-	// var boundKeyRange = IDBKeyRange.bound("Bill", "Donna", false, true);
-
-	// To use one of the key ranges, pass it in as the first argument of openCursor()/openKeyCursor()
-	// index.openCursor(singleKeyRange).onsuccess = function(event) {
-	  // var cursor = event.target.result;
-	  // if (cursor) {
-		// // Do something with the matches.
-		// console.log(cursor.value.category + " " + cursor.value.clothing + " " + cursor.value.key);
-		
-		// cursor.continue();
-	  // }
-	// };
-	
 	// Using a normal cursor to grab whole customer record objects
 	index.openCursor().onsuccess = function(event) {
 	  var cursor = event.target.result;
@@ -91,20 +67,51 @@ request.query = function(key) {
 		// cursor.key is a name, like "Bill", and cursor.value is the whole object.
 		console.log(cursor.value.category + " " + cursor.value.clothing + " " + cursor.value.key);
 		
+		clothes.push(cursor.value);
+		
 		cursor.continue();
 	  }
 	};
+
+	console.log("get one at random");
+	// get one at random
+	var index = Math.floor(Math.random() * (clothes.length - 0 + 1)) + 0;
+	console.log(index);
+	
+	console.log(clothes[index]);
+}
+request.showAll = function() {
+	console.log(clothes);
+
+	var container = document.getElementById('cards');
+	var output = "";
+	
+	for(var i = 0; i < clothes.length - 1; i++) {
+		//var urlCreator = window.URL || window.webkitURL;
+		//var imageUrl = urlCreator.createObjectURL(clothes[i].image);
+
+		var binaryData = [];
+		binaryData.push(clothes[i].image[0]);
+		var imageUrl = window.URL.createObjectURL(new Blob(binaryData, {type: "application/zip"}));
+		
+		output += "<article><img class='article-img' src='" + imageUrl + "' alt=' '/><h1 class='article-title'>" + clothes[i].category + clothes[i].clothing + "</h1></article>";
+	}
+	
+	container.innerHTML = output
 }
 
 
 const fileInput = document.getElementById('input-picture');
 
 fileInput.addEventListener('change', (e) => {
+	var category = document.querySelector('input[name="category"]:checked').value;
+	var clothing = document.querySelector('input[name="clothing"]:checked').value;
+
 	var clothing = {
-		category: "warm",
-		clothing: "top",
+		category: category,
+		clothing: clothing,
 		image: e.target.files,
-		key: "warm-clothes"
+		key: Math.random()
 	};
 
 	request.put(clothing);

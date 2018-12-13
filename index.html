@@ -8,6 +8,7 @@
   <body>
     <header>
       <h1 class="heading">Match It</h1>
+	  <button id="btnadd" type="button" class="button button4">install</button>
     </header>
     <main>
       <section class="leading">
@@ -16,9 +17,24 @@
       </section>
 	  <section class="cards">
 		<input id="input-picture" type="file" accept="image/*" class="button button4">
-		<button id="btnadd" type="button" class="button button4">install</button>
+
+		<div>
+			<input type="radio" id="category1" name="category" value="warm" checked="checked">
+			<label for="category1">Warm</label>
+
+			<input type="radio" id="category2" name="category" value="cold">
+			<label for="category2">Cold</label>
+		</div>
+
+		<div>
+			<input type="radio" id="clothing1" name="clothing" value="top" checked="checked">
+			<label for="clothing1">Top</label>
+
+			<input type="radio" id="clothing2" name="clothing" value="bottom">
+			<label for="clothing2">Bottom</label>
+		</div>
 	  </section>
-      <section class="cards">
+      <section class="cards" id="cards">
         <article>
           <img class="article-img" src="http://placekitten.com/305/205" alt=" " />
           <h1 class="article-title">
