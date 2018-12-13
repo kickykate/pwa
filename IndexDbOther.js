@@ -54,6 +54,48 @@ request.get = function(key) {
 		console.log(event.target.result);
 	};
 }
+request.query = function(key) {
+	var objectStore = db.transaction("clothes", "readwrite").objectStore("clothes");
+	var index = objectStore.index("category");
+
+	// Only match "warm"
+	var singleKeyRange = IDBKeyRange.only("warm");
+
+	// // Match anything past "Bill", including "Bill"
+	// var lowerBoundKeyRange = IDBKeyRange.lowerBound("warm");
+
+	// // Match anything past "Bill", but don't include "Bill"
+	// var lowerBoundOpenKeyRange = IDBKeyRange.lowerBound("Bill", true);
+
+	// // Match anything up to, but not including, "Donna"
+	// var upperBoundOpenKeyRange = IDBKeyRange.upperBound("Donna", true);
+
+	// // Match anything between "Bill" and "Donna", but not including "Donna"
+	// var boundKeyRange = IDBKeyRange.bound("Bill", "Donna", false, true);
+
+	// To use one of the key ranges, pass it in as the first argument of openCursor()/openKeyCursor()
+	// index.openCursor(singleKeyRange).onsuccess = function(event) {
+	  // var cursor = event.target.result;
+	  // if (cursor) {
+		// // Do something with the matches.
+		// console.log(cursor.value.category + " " + cursor.value.clothing + " " + cursor.value.key);
+		
+		// cursor.continue();
+	  // }
+	// };
+	
+	// Using a normal cursor to grab whole customer record objects
+	index.openCursor().onsuccess = function(event) {
+	  var cursor = event.target.result;
+	  if (cursor) {
+		// cursor.key is a name, like "Bill", and cursor.value is the whole object.
+		console.log(cursor.value.category + " " + cursor.value.clothing + " " + cursor.value.key);
+		
+		cursor.continue();
+	  }
+	};
+}
+
 
 const fileInput = document.getElementById('input-picture');
 
