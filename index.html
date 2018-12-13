@@ -1,29 +1,46 @@
 <head>
 	<link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
 <!--index.html-->
-<body>
-	<div id="root">
-	  <div id="container">
-		<div class="inner-container">
-			<div id="header">
-				<h1>Our first PWA</h1>
-			</div>
-			<div id="loading-container">
-				<a href="index.html">click me</a>
-				<img src="/pwa/assets/icon.png" alt="logo" id="loader"/>
-			</div>
-			<div>
-				<input id="input-picture" type="file" accept="image/*">
-			</div>
-			<div>
-				<button id="btnAdd" type="button">Install</button>
-			</div>
-		</div>
-	  </div>
-	</div>
-</body>
+  <body>
+    <header>
+      <h1 class="heading">Match It</h1>
+    </header>
+    <main>
+      <section class="leading">
+        <p class="leading-bigtext">Match It</p>
+        <p class="leading-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae semper quam. Praesent lobortis tellus quis erat condimentum, a bibendum tortor volutpat.</p>
+      </section>
+	  <section class="cards">
+		<input id="input-picture" type="file" accept="image/*">
+		<button id="btnadd" type="button">install</button>
+	  </section>
+      <section class="cards">
+        <article>
+          <img class="article-img" src="http://placekitten.com/305/205" alt=" " />
+          <h1 class="article-title">
+            Title of article
+          </h1>
+        </article>
+        <article>
+          <img class="article-img" src="http://placekitten.com/320/220" alt=" " />
+          <h1 class="article-title">
+            Title of article
+          </h1>
+        </article>
+        <article>
+          <img class="article-img" src="http://placekitten.com/330/240" alt=" " />
+          <h1 class="article-title">
+            Title of article
+          </h1>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
 
 <script>
   const pictureInput = document.getElementById('input-picture');
