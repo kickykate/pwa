@@ -99,7 +99,10 @@ request.showAll = function() {
 	
 	container.innerHTML = output
 }
-
+request.blah = function() {
+	request.query("test");
+	request.showAll();
+}
 
 const fileInput = document.getElementById('input-picture');
 
