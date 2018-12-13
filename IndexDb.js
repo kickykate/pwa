@@ -38,16 +38,23 @@
             xhr.send();
         },
 
-        putElephantInDb = function (blob) {
+        putElephantInDb = function (clothes) {
             console.log("Putting elephants in IndexedDB");
-
+			console.log(clothes);
+			
             // Open a transaction to the database
             var transaction = db.transaction(["elephants"], "readwrite");
 
             // Put the blob into the dabase
-            var put = transaction.objectStore("elephants").put(blob, "image");
+			var key = clothes.category + "." + clothes.clothing;
+            var put = transaction.objectStore("elephants").put(clothes, key);
         };
 
+        testing = function (clothes) {
+			
+        };
+
+		
     request.onerror = function (event) {
         console.log("Error creating/accessing IndexedDB database");
     };
@@ -86,4 +93,12 @@
 
 const fileInput = document.getElementById('input-picture');
 
-fileInput.addEventListener('change', (e) => putElephantInDb(e.target.files));
+fileInput.addEventListener('change', (e) => {
+	var clothing = {
+		category: "warm",
+		clothing: "top",
+		image: e.target.files
+	};
+
+	putElephantInDb(clothing);
+});
