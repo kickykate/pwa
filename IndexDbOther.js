@@ -1,6 +1,7 @@
 const dbName = "clothes_db";
 
 var db;
+var objectStore;
 var request = indexedDB.open(dbName, 2);
 
 request.onerror = function(event) {
@@ -45,6 +46,14 @@ request.put = function (clothes) {
 	var key = clothes.category + "." + clothes.clothing;
 	var put = transaction.objectStore("clothes").add(clothes);
 };
+request.get = function(key) {
+	var objectStore = db.transaction("clothes", "readwrite").objectStore("clothes");
+	var index = objectStore.index("category");
+
+	index.get("warm").onsuccess = function(event) {
+		console.log(event.target.result);
+	};
+}
 
 const fileInput = document.getElementById('input-picture');
 
