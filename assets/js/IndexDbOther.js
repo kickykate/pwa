@@ -36,17 +36,24 @@ request.onupgradeneeded = function(event) {
 		// Store values in the newly created objectStore.
 		var customerObjectStore = db.transaction("clothes", "readwrite").objectStore("customers");
 		customerData.forEach(function(customer) {
-		customerObjectStore.add(customer);
+		customerObjectStore.put(customer);
 		});
 	};
 };
 request.put = function (clothes) {
+	console.log('in put');
+	
 	// Open a transaction to the database
-	var transaction = db.transaction(["clothes"], "readwrite");
+	var transaction = db.transaction(["clothes"], "readwrite").objectStore("clothes");
 
 	// Put the blob into the dabase
 	var key = clothes.key;
-	var put = transaction.objectStore("clothes").add(clothes);
+	
+	console.log('before put');
+	
+	var put = transaction.put(clothes);
+	
+	console.log('after put');
 };
 request.get = function(key) {
 	var objectStore = db.transaction("clothes", "readwrite").objectStore("clothes");
@@ -91,7 +98,7 @@ request.showAll = function() {
 		//var imageUrl = urlCreator.createObjectURL(clothes[i].image);
 
 		var binaryData = [];
-		binaryData.push(clothes[i].image[0]);
+		binaryData.push(clothes[i].image);
 		var imageUrl = window.URL.createObjectURL(new Blob(binaryData, {type: "application/zip"}));
 		
 		output += "<article><img class='article-img' src='" + imageUrl + "' alt=' '/><h1 class='article-title'>" + clothes[i].category + clothes[i].clothing + "</h1></article>";
@@ -103,17 +110,33 @@ request.blah = function() {
 	request.query("test");
 	request.showAll();
 }
+request.testPut = function() {
+	console.log("before testPut")
+
+	var o = {
+		key: "sup",
+		category: "bleh"
+	};
+	
+	var objectStore = db.transaction(['clothes'], "readwrite").objectStore('clothes');
+	var updateTitleRequest = objectStore.put(o);
+	
+	console.log("after testPut")
+}
+
 
 const fileInput = document.getElementById('input-picture');
 
 fileInput.addEventListener('change', (e) => {
+	console.log('on change');
+	
 	var category = document.querySelector('input[name="category"]:checked').value;
 	var clothing = document.querySelector('input[name="clothing"]:checked').value;
 
 	var clothing = {
 		category: category,
 		clothing: clothing,
-		image: e.target.files,
+		image: e.target.files[0],
 		key: Math.random()
 	};
 
