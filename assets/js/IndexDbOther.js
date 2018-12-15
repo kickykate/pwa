@@ -97,6 +97,8 @@ request.showAll = function() {
 		//var urlCreator = window.URL || window.webkitURL;
 		//var imageUrl = urlCreator.createObjectURL(clothes[i].image);
 
+		var imageBlob = request.arrayBufferToBlob(clothes[i].image, clothes[i].imageType);
+		
 		var binaryData = [];
 		binaryData.push(clothes[i].image);
 		var imageUrl = window.URL.createObjectURL(new Blob(binaryData, {type: "application/zip"}));
@@ -123,7 +125,19 @@ request.testPut = function() {
 	
 	console.log("after testPut")
 }
-
+request.arrayBufferToBlob = function (buffer, type) {
+  return new Blob([buffer], {type: type});
+}
+request.blobToArrayBuffer = function (blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.addEventListener('loadend', (e) => {
+      resolve(reader.result);
+    });
+    reader.addEventListener('error', reject);
+    reader.readAsArrayBuffer(blob);
+  });
+}
 
 const fileInput = document.getElementById('input-picture');
 
@@ -133,12 +147,16 @@ fileInput.addEventListener('change', (e) => {
 	var category = document.querySelector('input[name="category"]:checked').value;
 	var clothing = document.querySelector('input[name="clothing"]:checked').value;
 
-	var clothing = {
-		category: category,
-		clothing: clothing,
-		image: e.target.files[0],
-		key: Math.random()
-	};
+	request.blobToArrayBuffer(e.target.files[0])
+		.then(function(arrayBuffer) {
+			var clothing = {
+				category: category,
+				clothing: clothing,
+				image: arrayBuffer,
+				imageType: typeof e.target.files[0],
+				key: Math.random()
+			};
 
-	request.put(clothing);
+			request.put(clothing);
+		});
 });
