@@ -1,5 +1,6 @@
 <head>
 	<link rel="manifest" href="manifest.json">
+	<script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
@@ -60,16 +61,6 @@
 </html>
 
 <script>
-  const pictureInput = document.getElementById('input-picture');
-
-  pictureInput.addEventListener('change', (e) => doSomethingWithFiles(e.target.files));
-  
-  function doSomethingWithFiles(files) {
-	console.log(files);
-  }
-</script>
-
-<script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('/pwa/service-worker.js').then(function(registration) {
@@ -114,4 +105,4 @@ btnAdd.addEventListener('click', (e) => {
 });
 </script>
 
-<script src="assets/js/IndexDbOther.js"></script>
+<script src="assets/js/MatchIt.js"></script>
