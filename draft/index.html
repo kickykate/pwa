@@ -1,0 +1,109 @@
+<head>
+	<link rel="manifest" href="manifest.json">
+	<script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<!--index.html-->
+  <body>
+    <header>
+      <h1 class="heading">Match It</h1>
+	  <button id="btnadd" type="button" class="button button4">install</button>
+	  <button id="btnTesting" type="button" class="button button4" onclick="request.blah()">testing</button>
+    </header>
+    <main>
+      <section class="leading">
+        <p class="leading-bigtext">Match It</p>
+        <p class="leading-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae semper quam. Praesent lobortis tellus quis erat condimentum, a bibendum tortor volutpat.</p>
+      </section>
+	  <section class="cards">
+		<input id="input-picture" type="file" accept="image/*" class="button button4">
+
+		<div>
+			<input type="radio" id="category1" name="category" value="warm" checked="checked">
+			<label for="category1">Warm</label>
+
+			<input type="radio" id="category2" name="category" value="cold">
+			<label for="category2">Cold</label>
+		</div>
+
+		<div>
+			<input type="radio" id="clothing1" name="clothing" value="top" checked="checked">
+			<label for="clothing1">Top</label>
+
+			<input type="radio" id="clothing2" name="clothing" value="bottom">
+			<label for="clothing2">Bottom</label>
+		</div>
+	  </section>
+      <section class="cards" id="cards">
+        <article>
+          <img class="article-img" src="http://placekitten.com/305/205" alt=" " />
+          <h1 class="article-title">
+            Title of article
+          </h1>
+        </article>
+        <article>
+          <img class="article-img" src="http://placekitten.com/320/220" alt=" " />
+          <h1 class="article-title">
+            Title of article
+          </h1>
+        </article>
+        <article>
+          <img class="article-img" src="http://placekitten.com/330/240" alt=" " />
+          <h1 class="article-title">
+            Title of article
+          </h1>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/pwa/service-worker.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+</script>
+
+<script>
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('in beforeinstallprompt');
+  console.log(e);
+
+  // Prevent Chrome 67 and earlier from automatically showing the prompt
+  e.preventDefault();
+  // Stash the event so it can be triggered later.
+  deferredPrompt = e;
+});
+
+btnAdd = document.getElementById("btnadd");
+btnAdd.addEventListener('click', (e) => {
+  // hide our user interface that shows our A2HS button
+  btnAdd.style.display = 'none';
+  // Show the prompt
+  deferredPrompt.prompt();
+  // Wait for the user to respond to the prompt
+  deferredPrompt.userChoice
+    .then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the A2HS prompt');
+      } else {
+        console.log('User dismissed the A2HS prompt');
+      }
+      deferredPrompt = null;
+    });
+});
+</script>
+
+<script src="assets/js/MatchIt.js"></script>

@@ -72,3 +72,28 @@ fileInput.addEventListener('change', (e) => {
 			matchItDb.put(entry);
 		});
 });
+
+showSection = function(clothes, title) {
+	var container = document.getElementById('cards');
+	var output = "<h1>" + title + "</h1>";
+	
+	for(var i = 0; i < clothes.length - 1; i++) {
+		var imageBlob = imageHelper.arrayBufferToBlob(clothes[i].image, clothes[i].imageType);
+		
+		var binaryData = [];
+		binaryData.push(clothes[i].image);
+		var imageUrl = window.URL.createObjectURL(new Blob(binaryData, {type: "application/zip"}));
+		
+		output += "<article><img class='article-img' src='" + imageUrl + "' alt=' '/><h1 class='article-title'>" + clothes[i].category + clothes[i].clothing + "</h1></article>";
+	}
+	
+	container.innerHTML = output
+};
+
+showAll = function() {
+	var matchItDb = new matchIt();
+	matchItDb.getAllTops().then((clothes) => { showSection(clothes, "tops") });
+	matchItDb.getAllBottoms().then((clothes) => { showSection(clothes, "bottoms") });
+};
+
+this.showAll();
