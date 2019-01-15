@@ -54,15 +54,15 @@ btnAdd.addEventListener('click', (e) => {
 	var category = document.querySelector('input[name="category"]:checked').value;
 	var clothing = document.querySelector('input[name="clothing"]:checked').value;
 	
-	var image = fileinput.files[0];
+	var myImage = fileinput.files[0];
 
-	imageHelper.blobToArrayBuffer(image)
+	imageHelper.blobToArrayBuffer(myImage)
 		.then(function(arrayBuffer) {
 			var entry = {
 				category: category,
 				clothing: clothing,
 				image: arrayBuffer,
-				imageType: typeof image,
+				imageType: typeof myImage,
 				key: Math.random()
 			};
 
