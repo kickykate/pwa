@@ -47,23 +47,32 @@ var imageHelper = {
 const fileinput = document.getElementById('input-picture');
 
 fileinput.addEventListener('change', (e) => {
+});
+
+btnAdd = document.getElementById("btnadd");
+btnAdd.addEventListener('click', (e) => {
 	var category = document.querySelector('input[name="category"]:checked').value;
 	var clothing = document.querySelector('input[name="clothing"]:checked').value;
 	
-	imageHelper.blobToArrayBuffer(e.target.files[0])
+	var image = fileinput.files[0];
+
+	imageHelper.blobToArrayBuffer(image)
 		.then(function(arrayBuffer) {
 			var entry = {
 				category: category,
 				clothing: clothing,
 				image: arrayBuffer,
-				imageType: typeof e.target.files[0],
+				imageType: typeof image,
 				key: Math.random()
 			};
 
 			var matchItDb = new matchIt();
 			matchItDb.put(entry);
+
+			alert('saved!!!');
 		});
 });
+
 
 showSection = function(clothes, title) {
 	var container = document.getElementById('clothes-section');

@@ -45,7 +45,7 @@
                         take a picture of your clothes
                 </h1>
                 <input id="input-picture" type="file" accept="image/*" class="button button4">
-               <button id="btnadd" type="button" class="button button4">install</button>
+               <button id="btnadd" type="button" class="button button4">Save my clothes</button>
            </article>
        </section>
         <section class="cards" id="clothes-section">
@@ -78,24 +78,6 @@
       e.preventDefault();
       // Stash the event so it can be triggered later.
       deferredPrompt = e;
-    });
-    
-    btnAdd = document.getElementById("btnadd");
-    btnAdd.addEventListener('click', (e) => {
-      // hide our user interface that shows our A2HS button
-      btnAdd.style.display = 'none';
-      // Show the prompt
-      deferredPrompt.prompt();
-      // Wait for the user to respond to the prompt
-      deferredPrompt.userChoice
-        .then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the A2HS prompt');
-          } else {
-            console.log('User dismissed the A2HS prompt');
-          }
-          deferredPrompt = null;
-        });
     });
 </script>
     
