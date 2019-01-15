@@ -17,14 +17,39 @@
        </section>
        <section class="cards" id="cards">
            <article>
-               <h1 class="artical-title">
-                   take a picture of your clothes
-               </h1>
+                <div>
+                    <strong>pick warm weather clothes or cold weather clothes</strong>
+                    <br/>
+                    
+                    <input type="radio" id="category1" name="category" value="warm" checked="checked">
+                    <label for="category1">Warm weather clothes</label>
+                    <br/>
 
-               <input id="input-picture" type="file" accept="image/*" class="button button4">
+                    <input type="radio" id="category2" name="category" value="cold">
+                    <label for="category2">Cold weather clothes</label>
+                </div>
+
+                <div>
+                    <strong>top or bottom</strong>
+                    <br/>
+
+                    <input type="radio" id="clothing1" name="clothing" value="top" checked="checked">
+                    <label for="clothing1">Top</label>
+                    <br/>
+
+                    <input type="radio" id="clothing2" name="clothing" value="bottom">
+                    <label for="clothing2">Bottom</label>
+                </div>
+
+                <h1 class="artical-title">
+                        take a picture of your clothes
+                </h1>
+                <input id="input-picture" type="file" accept="image/*" class="button button4">
                <button id="btnadd" type="button" class="button button4">install</button>
            </article>
        </section>
+        <section class="cards" id="clothes-section">
+        </section>
     </main>
 </body>
 
@@ -72,8 +97,6 @@
           deferredPrompt = null;
         });
     });
-
-    console.log('test');
 </script>
     
 <script src="assets/js/match-it.js"></script>

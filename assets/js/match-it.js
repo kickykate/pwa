@@ -12,10 +12,10 @@ function matchIt() {
 		// to do later
 	};
 	this.getAllTops = async function () {
-		// to do later
+		return await this.db.clothes.where('clothing').equalsIgnoreCase('top').toArray();
 	};
 	this.getAllBottoms = async function () {
-		// to do later
+		return await this.db.clothes.where('clothing').equalsIgnoreCase('bottom').toArray();
 	};
 	this.getTop = function() {
         // to do later
@@ -24,19 +24,69 @@ function matchIt() {
         // to do later{
 	};
 	
-	this.db = new Dexie("matchIt");	
+	this.db = new Dexie("matchIt");
 	this.initialize();
+};
+
+var imageHelper = {
+	arrayBufferToBlob: function (buffer, type) {
+		return new Blob([buffer], {type: type});
+	},
+	blobToArrayBuffer: function (blob) {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.addEventListener('loadend', (e) => {
+				resolve(reader.result);
+			});
+			reader.addEventListener('error', reject);
+			reader.readAsArrayBuffer(blob);
+		});
+	}
 };
 
 const fileinput = document.getElementById('input-picture');
 
 fileinput.addEventListener('change', (e) => {
-    var entry = {
-        category: "top",
-        clothing: "short",
-        key: Math.random()
-    };
+	var category = document.querySelector('input[name="category"]:checked').value;
+	var clothing = document.querySelector('input[name="clothing"]:checked').value;
+	
+	imageHelper.blobToArrayBuffer(e.target.files[0])
+		.then(function(arrayBuffer) {
+			var entry = {
+				category: category,
+				clothing: clothing,
+				image: arrayBuffer,
+				imageType: typeof e.target.files[0],
+				key: Math.random()
+			};
 
-    var matchItDb = new matchIt();
-    matchItDb.put(entry);
-})
+			var matchItDb = new matchIt();
+			matchItDb.put(entry);
+		});
+});
+
+showSection = function(clothes, title) {
+	var container = document.getElementById('clothes-section');
+	var output = "<h1>" + title + "</h1>";
+	
+	for(var i = 0; i < clothes.length - 1; i++) {
+		var imageBlob = imageHelper.arrayBufferToBlob(clothes[i].image, clothes[i].imageType);
+		
+		var binaryData = [];
+		binaryData.push(clothes[i].image);
+		var imageUrl = window.URL.createObjectURL(new Blob(binaryData, {type: "application/zip"}));
+		
+		output += "<article><img class='article-img' src='" + imageUrl + "' alt=' '/><h1 class='article-title'>" + clothes[i].category + clothes[i].clothing + "</h1></article>";
+	}
+	
+	container.innerHTML = output
+};
+
+showAll = function() {
+	var matchItDb = new matchIt();
+	matchItDb.getAllTops().then((clothes) => { showSection(clothes, "tops") });
+	matchItDb.getAllBottoms().then((clothes) => { showSection(clothes, "bottoms") });
+};
+
+var matchItDb = new matchIt();
+this.showAll();
