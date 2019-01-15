@@ -49,7 +49,7 @@ const fileinput = document.getElementById('input-picture');
 fileinput.addEventListener('change', (e) => {
 });
 
-btnAdd = document.getElementById("btnadd");
+var btnAdd = document.getElementById("btnadd");
 btnAdd.addEventListener('click', (e) => {
 	var category = document.querySelector('input[name="category"]:checked').value;
 	var clothing = document.querySelector('input[name="clothing"]:checked').value;
@@ -73,6 +73,10 @@ btnAdd.addEventListener('click', (e) => {
 		});
 });
 
+var btnShow = document.getElementById("btnShow");
+btnShow.addEventListener('click', (e) => {
+	location.reload();
+})
 
 showSection = function(clothes, title) {
 	var container = document.getElementById('clothes-section');
