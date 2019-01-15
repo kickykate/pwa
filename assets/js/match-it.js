@@ -45,8 +45,12 @@ var imageHelper = {
 };
 
 const fileinput = document.getElementById('input-picture');
+var myImage;
+var myImageType;
 
 fileinput.addEventListener('change', (e) => {
+	myImage = e.target.files[0];
+	myImageType = typeof e.target.files[0];
 });
 
 var btnAdd = document.getElementById("btnadd");
@@ -54,7 +58,7 @@ btnAdd.addEventListener('click', (e) => {
 	var category = document.querySelector('input[name="category"]:checked').value;
 	var clothing = document.querySelector('input[name="clothing"]:checked').value;
 	
-	var myImage = fileinput.files[0];
+	// var myImage = fileinput.files[0];
 
 	imageHelper.blobToArrayBuffer(myImage)
 		.then(function(arrayBuffer) {
@@ -62,7 +66,7 @@ btnAdd.addEventListener('click', (e) => {
 				category: category,
 				clothing: clothing,
 				image: arrayBuffer,
-				imageType: typeof myImage,
+				imageType: myImageType,
 				key: Math.random()
 			};
 
