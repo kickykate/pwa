@@ -51,6 +51,9 @@ var myImageType;
 fileinput.addEventListener('change', (e) => {
 	myImage = e.target.files[0];
 	myImageType = typeof e.target.files[0];
+
+	console.log(typeof e.target.files[0]);
+	console.log(e.target.files[0]);
 });
 
 var btnAdd = document.getElementById("btnadd");
@@ -62,11 +65,13 @@ btnAdd.addEventListener('click', (e) => {
 
 	imageHelper.blobToArrayBuffer(myImage)
 		.then(function(arrayBuffer) {
+				console.log("the type is " + myImage.type);
+
 			var entry = {
 				category: category,
 				clothing: clothing,
 				image: arrayBuffer,
-				imageType: myImageType,
+				imageType: myImage.type,
 				key: Math.random()
 			};
 
