@@ -91,7 +91,7 @@ showSection = function(clothes, title) {
 	var container = document.getElementById('clothes');
 	var output = "";
 
-	for(var i = 0; i < clothes.length - 1; i++) {
+	for(var i = 0; i < clothes.length; i++) {
 		var imageBlob = imageHelper.arrayBufferToBlob(clothes[i].image, clothes[i].imageType);
 		
 		var binaryData = [];
