@@ -88,9 +88,9 @@ btnShow.addEventListener('click', (e) => {
 })
 
 showSection = function(clothes, title) {
-	var container = document.getElementById('clothes-section');
-	var output = "<h1>" + title + "</h1>";
-	
+	var container = document.getElementById('clothes');
+	var output = "";
+
 	for(var i = 0; i < clothes.length - 1; i++) {
 		var imageBlob = imageHelper.arrayBufferToBlob(clothes[i].image, clothes[i].imageType);
 		
@@ -98,10 +98,10 @@ showSection = function(clothes, title) {
 		binaryData.push(clothes[i].image);
 		var imageUrl = window.URL.createObjectURL(new Blob(binaryData, {type: "application/zip"}));
 		
-		output += "<article><img class='article-img' src='" + imageUrl + "' alt=' '/><h1 class='article-title'>" + clothes[i].category + clothes[i].clothing + "</h1></article>";
+		output += "<div><img class='u-max-full-width' src='" + imageUrl + "'></div>";
 	}
 	
-	container.innerHTML = output
+	container.innerHTML += output
 };
 
 showAll = function() {
