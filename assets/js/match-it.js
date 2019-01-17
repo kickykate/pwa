@@ -2,25 +2,30 @@ function matchIt() {
 	this.initialize = function() {
 		// Define our database with indexable fields
 		this.db.version(1).stores({
-		  clothes: 'key, category, clothing'
+		  clothes: 'key, category, clothing, [category+clothing]'
 		});
 	};
 	this.put = function(clothes) {
 		this.db.clothes.put(clothes);
 	};
-	this.get = function(id) {
-		// to do later
-	};
 	this.getAllTops = async function () {
+		//return await this.db.clothes.where('category+clothing').equalsIgnoreCase('[warm,top]').toArray();
 		return await this.db.clothes.where('clothing').equalsIgnoreCase('top').toArray();
 	};
 	this.getAllBottoms = async function () {
-		return await this.db.clothes.where('clothing').equalsIgnoreCase('bottom').toArray();
+		//return await this.db.clothes.where('category+clothing').equalsIgnoreCase('[cold,bottom]').toArray();
+		 return await this.db.clothes.where('clothing').equalsIgnoreCase('bottom').toArray();
 	};
-	this.getTop = function() {
+	this.getTopCold = function() {
         // to do later
 	};
-    this.getBottom = function() {
+	this.getTopWarm = function() {
+        // to do later
+	};
+    this.getBottomCold = function() {
+        // to do later{
+	};
+    this.getBottomWarm = function() {
         // to do later{
 	};
 	
@@ -51,9 +56,6 @@ var myImageType;
 fileinput.addEventListener('change', (e) => {
 	myImage = e.target.files[0];
 	myImageType = typeof e.target.files[0];
-
-	console.log(typeof e.target.files[0]);
-	console.log(e.target.files[0]);
 });
 
 var btnAdd = document.getElementById("btnadd");
@@ -87,7 +89,7 @@ btnShow.addEventListener('click', (e) => {
 	location.reload();
 })
 
-showSection = function(clothes, title) {
+showSection = function(clothes) {
 	var container = document.getElementById('clothes');
 	var output = "";
 
@@ -106,8 +108,8 @@ showSection = function(clothes, title) {
 
 showAll = function() {
 	var matchItDb = new matchIt();
-	matchItDb.getAllTops().then((clothes) => { showSection(clothes, "tops") });
-	matchItDb.getAllBottoms().then((clothes) => { showSection(clothes, "bottoms") });
+	matchItDb.getAllTops().then((clothes) => { showSection(clothes) });
+	matchItDb.getAllBottoms().then((clothes) => { showSection(clothes) });
 };
 
 var matchItDb = new matchIt();

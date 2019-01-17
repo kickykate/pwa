@@ -1,100 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-        <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1">
-                <link rel="apple-touch-icon" sizes="180x180" href="assets/images/icon.png">
-                <link rel="manifest" href="assets/json/manifest.json">
-                <link rel="stylesheet" href="assets/css/normalize.css">
-                <link rel="stylesheet" href="assets/css/skeleton.css">
-                <link rel="stylesheet" href="assets/css/custom.css">
-                <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
-            </head>
-<body>
-
-  <!-- Primary Page Layout
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-
-  <div class="section hero">
-    <div class="container">
-      <div class="row">
-        <div class="one-half column">
-            <h1>Match It</h1>
-          <h4 class="hero-heading">It helps you pick out the appropriate clothing for the weather</h4>
-        </div>
-        <div class="one-half column phones">
-          <img class="phone" src="assets/images/clothes.png">
-          <img class="phone" src="images/iphone.png">
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="apple-touch-icon" sizes="180x180" href="assets/images/icon.png">
+      <link rel="manifest" href="assets/json/manifest.json">
+      <link rel="stylesheet" href="assets/css/normalize.css">
+      <link rel="stylesheet" href="assets/css/skeleton.css">
+      <link rel="stylesheet" href="assets/css/custom.css">
+      <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+  </head>
+  <body>
+    <div class="section hero">
+      <div class="container">
+        <div class="row">
+          <div class="one-half column">
+              <h1>Match It</h1>
+            <h4 class="hero-heading">It helps you pick out the appropriate clothing for the weather</h4>
+          </div>
+          <div class="one-half column phones">
+            <img class="phone" src="assets/images/clothes.png">
+            <img class="phone" src="images/iphone.png">
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="section values">
-    <div class="container">
-      <div class="row">
-        <div class="one-third column value">
-            <h2>pick warm weather clothes or cold weather clothes</h2>
-            <br/>
-            
-            <input type="radio" id="category1" name="category" value="warm" checked="checked">
-            <label for="category1">Warm weather clothes</label>
-            <br/>
+    <div class="section values">
+      <div class="container">
+        <div class="row">
+          <div class="one-third column value">
+              <h2>pick warm weather clothes or cold weather clothes</h2>
+              <br/>
+              
+              <input type="radio" id="category1" name="category" value="warm" checked="checked">
+              <label for="category1">Warm weather clothes</label>
+              <br/>
 
-            <input type="radio" id="category2" name="category" value="cold">
-            <label for="category2">Cold weather clothes</label>
-        </div>
-        <div class="one-third column value">
-            <h2>top or bottom</h2>
-            <br/>
+              <input type="radio" id="category2" name="category" value="cold">
+              <label for="category2">Cold weather clothes</label>
+          </div>
+          <div class="one-third column value">
+              <h2>top or bottom</h2>
+              <br/>
 
-            <input type="radio" id="clothing1" name="clothing" value="top" checked="checked">
-            <label for="clothing1">Top</label>
-            <br/>
+              <input type="radio" id="clothing1" name="clothing" value="top" checked="checked">
+              <label for="clothing1">Top</label>
+              <br/>
 
-            <input type="radio" id="clothing2" name="clothing" value="bottom">
-            <label for="clothing2">Bottom</label>
-        </div>
-        <div class="one-third column value">
-            <h2>take a picture of your clothes</h2>
-            <input id="input-picture" type="file" accept="image/*" class="button button4">
-            <button id="btnadd" type="button" class="button button-primary">Save my clothes</button>
+              <input type="radio" id="clothing2" name="clothing" value="bottom">
+              <label for="clothing2">Bottom</label>
+          </div>
+          <div class="one-third column value">
+              <h2>take a picture of your clothes</h2>
+              <input id="input-picture" type="file" accept="image/*" class="button button4">
+              <button id="btnadd" type="button" class="button button-primary">Save my clothes</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="section get-help">
-    <div class="container">
-      <h3 class="section-heading">Something here</h3>
-      <p class="section-description">Something else here</p>
-      <button id="btnShow" type="button" class="button button-primary">Show my clothes</button>
-    </div>
-  </div>
-
-  <div class="section categories">
-    <div class="container">
-      <h3 class="section-heading">Your clothes</h3>
-      <p class="section-description">Something else here</p>
-      <div class="row" id="clothes">
+    <div class="section get-help">
+      <div class="container">
+        <h3 class="section-heading">Something here</h3>
+        <p class="section-description">Something else here</p>
+        <button id="btnShow" type="button" class="button button-primary">Show my clothes</button>
       </div>
     </div>
-  </div>
 
-
-  <script>
-        let deferredPrompt;
-        
-        window.addEventListener('beforeinstallprompt', (e) => {
-          console.log('in beforeinstallprompt');
-          console.log(e);
-        
-          // Prevent Chrome 67 and earlier from automatically showing the prompt
-          e.preventDefault();
-          // Stash the event so it can be triggered later.
-          deferredPrompt = e;
-        });
-    </script>
-        
+    <div class="section categories">
+      <div class="container">
+        <h3 class="section-heading">Your clothes</h3>
+        <p class="section-description">Something else here</p>
+        <div class="row" id="clothes">
+        </div>
+      </div>
+    </div>
+    
     <script src="assets/js/match-it.js"></script>
-</body>
+  </body>
 </html>
