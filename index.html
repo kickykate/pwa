@@ -52,7 +52,7 @@
           </div>
           <div class="one-third column value">
               <h2>take a picture of your clothes</h2>
-              <input id="input-picture" type="file" accept="image/*" class="button button4">
+              <input id="input-picture" type="file" accept="image/*" class="button button-primary">
               <button id="btnadd" type="button" class="button button-primary">Save my clothes</button>
           </div>
         </div>
@@ -61,8 +61,11 @@
 
     <div class="section get-help">
       <div class="container">
-        <h3 class="section-heading">Something here</h3>
-        <p class="section-description">Something else here</p>
+        <h3 class="section-heading">put in the temperature</h3>
+        <p class="section-description">enter a temperature that is is between 0 and 100</p>
+        <label for="temperatureimput">temperature</label>
+        <input class="u-half-width" type="numbers"  min="0" max="130" id="temperatureimput">
+      
         <button id="btnShow" type="button" class="button button-primary">Show my clothes</button>
       </div>
     </div>
@@ -70,7 +73,6 @@
     <div class="section categories">
       <div class="container">
         <h3 class="section-heading">Your clothes</h3>
-        <p class="section-description">Something else here</p>
         <div class="row" id="clothes">
         </div>
       </div>

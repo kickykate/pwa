@@ -8,25 +8,41 @@ function matchIt() {
 	this.put = function(clothes) {
 		this.db.clothes.put(clothes);
 	};
-	this.getAllTops = async function () {
-		//return await this.db.clothes.where('category+clothing').equalsIgnoreCase('[warm,top]').toArray();
-		return await this.db.clothes.where('clothing').equalsIgnoreCase('top').toArray();
+	this.getAllTopsWarm = async function () {
+		return await this.db.clothes.where('[category+clothing]').equals(['warm', 'top']).toArray();
 	};
-	this.getAllBottoms = async function () {
-		//return await this.db.clothes.where('category+clothing').equalsIgnoreCase('[cold,bottom]').toArray();
-		 return await this.db.clothes.where('clothing').equalsIgnoreCase('bottom').toArray();
+	this.getAllTopsCold = async function () {
+		return await this.db.clothes.where('[category+clothing]').equals(['cold', 'top']).toArray();
+	};
+	this.getAllBottomsWarm = async function () {
+		return await this.db.clothes.where('[category+clothing]').equals(['warm', 'bottom']).toArray();
+	};
+	this.getAllBottomsCold = async function () {
+		return await this.db.clothes.where('[category+clothing]').equals(['cold', 'bottom']).toArray();
 	};
 	this.getTopCold = function() {
-        // to do later
+		var result = this.getAllTopsCold().then(function(all) {
+			var index = Math.floor(Math.random() * (all.length));
+			return all[index];
+		});;
 	};
 	this.getTopWarm = function() {
-        // to do later
+		var result = this.getAllTopsWarm().then(function(all) {
+			var index = Math.floor(Math.random() * (all.length));
+			return all[index];
+		});;
 	};
     this.getBottomCold = function() {
-        // to do later{
+		var result = this.getAllBottomsCold().then(function(all) {
+			var index = Math.floor(Math.random() * (all.length));
+			return all[index];
+		});;
 	};
     this.getBottomWarm = function() {
-        // to do later{
+		var result = this.getAllBottomsCold().then(function(all) {
+			var index = Math.floor(Math.random() * (all.length));
+			return all[index];
+		});;
 	};
 	
 	this.db = new Dexie("matchIt");
@@ -90,6 +106,8 @@ btnShow.addEventListener('click', (e) => {
 })
 
 showSection = function(clothes) {
+	console.log(clothes);
+
 	var container = document.getElementById('clothes');
 	var output = "";
 
@@ -108,8 +126,10 @@ showSection = function(clothes) {
 
 showAll = function() {
 	var matchItDb = new matchIt();
-	matchItDb.getAllTops().then((clothes) => { showSection(clothes) });
-	matchItDb.getAllBottoms().then((clothes) => { showSection(clothes) });
+	matchItDb.getAllTopsWarm().then((clothes) => { showSection(clothes) });
+	matchItDb.getAllTopsCold().then((clothes) => { showSection(clothes) });
+	matchItDb.getAllBottomsWarm().then((clothes) => { showSection(clothes) });
+	matchItDb.getAllBottomsCold().then((clothes) => { showSection(clothes) });
 };
 
 var matchItDb = new matchIt();
