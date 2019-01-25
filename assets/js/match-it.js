@@ -39,7 +39,7 @@ function matchIt() {
 		});;
 	};
     this.getBottomWarm = function() {
-		return this.getAllBottomsCold().then(function(all) {
+		return this.getAllBottomsWarm().then(function(all) {
 			var index = Math.floor(Math.random() * (all.length));
 			return all[index];
 		});;
