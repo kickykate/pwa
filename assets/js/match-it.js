@@ -21,25 +21,25 @@ function matchIt() {
 		return await this.db.clothes.where('[category+clothing]').equals(['cold', 'bottom']).toArray();
 	};
 	this.getTopCold = function() {
-		var result = this.getAllTopsCold().then(function(all) {
+		return this.getAllTopsCold().then(function(all) {
 			var index = Math.floor(Math.random() * (all.length));
 			return all[index];
 		});;
 	};
 	this.getTopWarm = function() {
-		var result = this.getAllTopsWarm().then(function(all) {
+		return this.getAllTopsWarm().then(function(all) {
 			var index = Math.floor(Math.random() * (all.length));
 			return all[index];
 		});;
 	};
     this.getBottomCold = function() {
-		var result = this.getAllBottomsCold().then(function(all) {
+		return this.getAllBottomsCold().then(function(all) {
 			var index = Math.floor(Math.random() * (all.length));
 			return all[index];
 		});;
 	};
     this.getBottomWarm = function() {
-		var result = this.getAllBottomsCold().then(function(all) {
+		return this.getAllBottomsCold().then(function(all) {
 			var index = Math.floor(Math.random() * (all.length));
 			return all[index];
 		});;
@@ -102,13 +102,31 @@ btnAdd.addEventListener('click', (e) => {
 
 var btnShow = document.getElementById("btnShow");
 btnShow.addEventListener('click', (e) => {
-	location.reload();
+	var message = document.getElementById("message");
+	var temp = document.getElementById("temperatureinput").value;
+	if (temp < 60) {
+		// cold weather clothes
+		message.innerHTML = "brrrr better wear somthing warm!!!";
+
+		var matchItDb = new matchIt();
+		
+		clearSection('clothes-choices');
+		matchItDb.getTopCold().then((clothes) => { showOneClothing(clothes, 'clothes-choices') });
+		matchItDb.getBottomCold().then((clothes) => { showOneClothing(clothes, 'clothes-choices') });
+	} else {
+		// warm weather clothes
+		message.innerHTML = "wow it's hot outside";
+
+		var matchItDb = new matchIt();
+
+		clearSection('clothes-choices');
+		matchItDb.getTopWarm().then((clothes) => { showOneClothing(clothes, 'clothes-choices') });
+		matchItDb.getBottomWarm().then((clothes) => { showOneClothing(clothes, 'clothes-choices') });
+	}
 })
 
-showSection = function(clothes) {
-	console.log(clothes);
-
-	var container = document.getElementById('clothes');
+showSection = function(clothes, sectionName) {
+	var container = document.getElementById(sectionName);
 	var output = "";
 
 	for(var i = 0; i < clothes.length; i++) {
@@ -124,12 +142,31 @@ showSection = function(clothes) {
 	container.innerHTML += output
 };
 
+clearSection = function(sectionName) {
+	var container = document.getElementById(sectionName);
+	container.innerHTML = "";
+}
+
+showOneClothing = function(clothes, sectionName) {
+	var container = document.getElementById(sectionName);
+	var output = "";
+
+	var imageBlob = imageHelper.arrayBufferToBlob(clothes.image, clothes.imageType);
+	
+	var binaryData = [];
+	binaryData.push(clothes.image);
+	var imageUrl = window.URL.createObjectURL(new Blob(binaryData, {type: "application/zip"}));
+	
+	output += "<div><img class='u-max-full-width' src='" + imageUrl + "'></div>";
+	container.innerHTML += output
+};
+
 showAll = function() {
 	var matchItDb = new matchIt();
-	matchItDb.getAllTopsWarm().then((clothes) => { showSection(clothes) });
-	matchItDb.getAllTopsCold().then((clothes) => { showSection(clothes) });
-	matchItDb.getAllBottomsWarm().then((clothes) => { showSection(clothes) });
-	matchItDb.getAllBottomsCold().then((clothes) => { showSection(clothes) });
+	matchItDb.getAllTopsWarm().then((clothes) => { showSection(clothes, 'clothes') });
+	matchItDb.getAllTopsCold().then((clothes) => { showSection(clothes, 'clothes') });
+	matchItDb.getAllBottomsWarm().then((clothes) => { showSection(clothes, 'clothes') });
+	matchItDb.getAllBottomsCold().then((clothes) => { showSection(clothes, 'clothes') });
 };
 
 var matchItDb = new matchIt();
