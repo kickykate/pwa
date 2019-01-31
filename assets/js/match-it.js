@@ -125,7 +125,7 @@ btnShow.addEventListener('click', (e) => {
 	}
 })
 
-showSection = function(clothes, sectionName) {
+showSection = function(clothes, sectionName, title) {
 	var container = document.getElementById(sectionName);
 	var output = "";
 
@@ -136,10 +136,14 @@ showSection = function(clothes, sectionName) {
 		binaryData.push(clothes[i].image);
 		var imageUrl = window.URL.createObjectURL(new Blob(binaryData, {type: "application/zip"}));
 		
-		output += "<div><img class='u-max-full-width' src='" + imageUrl + "'></div>";
+		var button = "<button id='delete' class='button button-primary' data-id='" + clothes[i].key + "'>Delete picture</button>";
+		output += "<div><img class='u-max-full-width' src='" + imageUrl + "'>" + button + "</div>";
 	}
-	
-	container.innerHTML += output
+
+	var heading = "<h1>" + title + "</h1>";
+
+	container.innerHTML += heading;
+	container.innerHTML += output;
 };
 
 clearSection = function(sectionName) {
@@ -163,10 +167,10 @@ showOneClothing = function(clothes, sectionName) {
 
 showAll = function() {
 	var matchItDb = new matchIt();
-	matchItDb.getAllTopsWarm().then((clothes) => { showSection(clothes, 'clothes') });
-	matchItDb.getAllTopsCold().then((clothes) => { showSection(clothes, 'clothes') });
-	matchItDb.getAllBottomsWarm().then((clothes) => { showSection(clothes, 'clothes') });
-	matchItDb.getAllBottomsCold().then((clothes) => { showSection(clothes, 'clothes') });
+	matchItDb.getAllTopsWarm().then((clothes) => { showSection(clothes, 'clothes', 'Warm weather tops') });
+	matchItDb.getAllTopsCold().then((clothes) => { showSection(clothes, 'clothes', 'Cold weather tops') });
+	matchItDb.getAllBottomsWarm().then((clothes) => { showSection(clothes, 'clothes', 'Warm weather bottoms') });
+	matchItDb.getAllBottomsCold().then((clothes) => { showSection(clothes, 'clothes', 'Cold weather bottoms') });
 };
 
 var matchItDb = new matchIt();
