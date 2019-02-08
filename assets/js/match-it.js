@@ -5,6 +5,10 @@ function matchIt() {
 		  clothes: 'key, category, clothing, [category+clothing]'
 		});
 	};
+	this.delete = function(id) {
+		var key = parseFloat(id);
+		return this.db.clothes.delete(key);
+	};
 	this.put = function(clothes) {
 		this.db.clothes.put(clothes);
 	};
@@ -97,6 +101,8 @@ btnAdd.addEventListener('click', (e) => {
 			matchItDb.put(entry);
 
 			alert('saved!!!');
+			
+			window.location.reload();
 		});
 });
 
@@ -125,6 +131,22 @@ btnShow.addEventListener('click', (e) => {
 	}
 })
 
+deleteClothes = function(e) {
+	var id = e.getAttribute("data-id");
+	console.log(id);
+	
+	var matchItDb = new matchIt();
+	matchItDb.delete(id)
+		.then(function() {
+			alert('deleted!')
+			window.location.reload();
+		})
+		.catch((err) => {
+			console.log(err);
+	});
+
+};
+
 showSection = function(clothes, sectionName, title) {
 	var container = document.getElementById(sectionName);
 	var output = "";
@@ -136,7 +158,7 @@ showSection = function(clothes, sectionName, title) {
 		binaryData.push(clothes[i].image);
 		var imageUrl = window.URL.createObjectURL(new Blob(binaryData, {type: "application/zip"}));
 		
-		var button = "<button id='delete' class='button button-primary' data-id='" + clothes[i].key + "'>Delete picture</button>";
+		var button = "<button id='delete' class='button button-primary' data-id='" + clothes[i].key + "' onclick='deleteClothes(this);'>Delete picture</button>";
 		output += "<div><img class='u-max-full-width' src='" + imageUrl + "'>" + button + "</div>";
 	}
 
